@@ -55,7 +55,7 @@ jobs:
     - name: Download clang-r445002
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r445002.tar.gz
+        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/5642ce999b98ff59fdc99b013b60f09f73a50864/clang-r445002.tar.gz
         mkdir clang-r445002
         tar -xf clang-r445002.tar.gz -C clang-r445002
         # Download GCC toolchain
