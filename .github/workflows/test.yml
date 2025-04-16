@@ -71,6 +71,10 @@ jobs:
     - name: Log Kernel
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
+        echo "kernel"
+        ls
+        echo "ksu_next"
+        cd KernelSu-Next
         ls
     - name: Download source boot image
       if: env.BUILD_BOOT_IMG == 'true'
