@@ -68,14 +68,10 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         git clone ${{ env.KERNEL_SOURCE }} -b ${{ env.KERNEL_SOURCE_BRANCH }} android-kernel --depth=1 --recurse-submodules
-    - name: Log Kernel
-      run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        echo "kernel"
-        ls
-        echo "ksu_next"
-        cd KernelSu-Next
-        ls
+        cd android-kernel
+        rm -rf KernelSu-Next
+        rm -rf AnyKernel3
+
     - name: Download source boot image
       if: env.BUILD_BOOT_IMG == 'true'
       run: |
