@@ -150,7 +150,12 @@ jobs:
         chmod +x *.sh
         chmod +x check-kernel-config
         ./check-kernel-config $GITHUB_WORKSPACE/kernel_workspace/android-kernel/arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }} -w
-        
+    - name: Upload final .config
+      uses: actions/upload-artifact@v4
+      if: always() # 确保即使编译失败也上传
+      with:
+        name: final-dot-config
+        path: kernel_workspace/android-kernel/out/.config
     - name: Setup ccache
       if: env.ENABLE_CCACHE == 'true'
       uses: hendrikmuhs/ccache-action@v1.2
