@@ -107,6 +107,8 @@ jobs:
         if [ ${{ env.DISABLE_FST }} = true ]; then
             sed -i "s/CONFIG_CC_STACKPROTECTOR_STRONG=y/# CONFIG_CC_STACKPROTECTOR_STRONG is not set/g" arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
         fi
+          grep -q CONFIG_IKCONFIG arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }} || echo "CONFIG_IKCONFIG=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+          grep -q CONFIG_IKCONFIG_PROC arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }} || echo "CONFIG_IKCONFIG_PROC=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
         
     - name: Setup LXC
       if: env.ENABLE_LXC == 'true'
@@ -167,6 +169,7 @@ jobs:
         export GCC_PATH=$GITHUB_WORKSPACE/kernel_workspace/aarch64-gcc/bin
         export GCC_ARM32_PATH=$GITHUB_WORKSPACE/kernel_workspace/arm-gcc/bin
         export PATH=$CLANG_PATH:$GCC_PATH:$GCC_ARM32_PATH:$PATH
+        make O=out ARCH=${{ env.ARCH }} ${{ env.KERNEL_CONFIG }}
         
         if [ ${{ env.ENABLE_CCACHE }} = true ]; then
             make -j$(nproc --all) CC="ccache clang" O=out ARCH=${{ env.ARCH }} \
